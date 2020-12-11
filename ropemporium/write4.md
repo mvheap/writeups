@@ -109,7 +109,7 @@ End of assembler dump.
  
  I'll use `.data` but `.bss` will work too.
  
- So what we are going to do is send the padding then with the gadget `pop r14; pop r15`, we change the value of r14 to the data and the r15 the `flag.txt` string, then with the gadget `pop rdi`, the new value of rdi is going to be flag.txt, and then we call the `print_file` function to get the flag
+So what we are going to do is send the padding then with the gadget `pop r14; pop r15`, we change the value of r14 to `.data` and the r15 the `flag.txt` string, then we move `flag.txt` to `.data` and after that with the gadget `pop rdi`, the new value of rdi is going to be flag.txt, and then we call the `print_file` function to get the flag
  
  The final exploit:
  
