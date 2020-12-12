@@ -1,0 +1,7 @@
+Coonect with nc
+
+```
+$ nc 2019shell1.picoctf.com 32225
+You're on your way to becoming the net cat master
+picoCTF{nEtCat_Mast3ry_b1d25ece}
+```
