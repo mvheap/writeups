@@ -10,7 +10,7 @@ $ checksec jeeves
 
 Let's open it on gdb and see the functions:
 
-```
+```bash
 pwndbg> info func
 All defined functions:
 
@@ -64,13 +64,13 @@ Dump of assembler code for function main:
 
 This binary prints some text, and compares the input with `0x1337bab3` if it's the same you get the flag
 
-```
+```bash
 0x0000555555555236 <+77>:    cmp    DWORD PTR [rbp-0x4],0x1337bab3
 ```
 
 The main function is using `gets` that is vulnerable to a buffer overflow let's find the offset, first generate a cyclic pattern
 
-```
+```python
 >>> from pwn import *                                                                                                                                                                 
 >>> cyclic(100)                                                                                                                                                                               
 b'aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaa'
@@ -78,7 +78,7 @@ b'aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaata
 
 Now let's send it:
 
-```
+```bash
 pwndbg> r                                                                                      
 Starting program: /home/localuser/htb/binary-exploitation-track/jeeves/jeeves 
 Hello, good sir!                                                                               
