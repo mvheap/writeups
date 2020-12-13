@@ -34,6 +34,34 @@ Non-debugging symbols:
 0x0000000000001328  _fini
 ```
 
+Main function:
+
+```bash
+pwndbg> disassemble main                                                                      
+Dump of assembler code for function main:                                                     
+   0x00005555555551e9 <+0>:     endbr64                                                       
+   0x00005555555551ed <+4>:     push   rbp                                                    
+   0x00005555555551ee <+5>:     mov    rbp,rsp                                                
+   0x00005555555551f1 <+8>:     sub    rsp,0x40                                               
+   0x00005555555551f5 <+12>:    mov    DWORD PTR [rbp-0x4],0xdeadc0d3                          
+   0x00005555555551fc <+19>:    lea    rdi,[rip+0xe05]        # 0x555555556008
+   0x0000555555555203 <+26>:    mov    eax,0x0
+   0x0000555555555208 <+31>:    call   0x5555555550a0 <printf@plt>
+   0x000055555555520d <+36>:    lea    rax,[rbp-0x40]          
+   0x0000555555555211 <+40>:    mov    rdi,rax                                                
+   0x0000555555555214 <+43>:    mov    eax,0x0                                                
+   0x0000555555555219 <+48>:    call   0x5555555550d0 <gets@plt>
+   0x000055555555521e <+53>:    lea    rax,[rbp-0x40]                                          
+   0x0000555555555222 <+57>:    mov    rsi,rax
+   0x0000555555555225 <+60>:    lea    rdi,[rip+0xe04]        # 0x555555556030                 
+   0x000055555555522c <+67>:    mov    eax,0x0
+   0x0000555555555231 <+72>:    call   0x5555555550a0 <printf@plt>                             
+   0x0000555555555236 <+77>:    cmp    DWORD PTR [rbp-0x4],0x1337bab3                          
+   0x000055555555523d <+84>:    jne    0x5555555552a8 <main+191>     
+ ----
+ ----
+```
+
 This binary prints some text, and compares the input with `0x1337bab3` if it's the same you get the flag
 
 ```
